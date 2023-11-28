@@ -150,6 +150,7 @@ function printAllGames($pdo){
     print '
     <table>
         <tr>
+            <th>ID</th>
             <th>Nome do Jogo</th>
             <th>Gênero</th>
             <th>Valor</th>
@@ -158,14 +159,14 @@ function printAllGames($pdo){
         </tr>';
     foreach (getAllgames($pdo) as $row){
         echo "<tr id=".$row['id'].">";
-        echo "<td>".$row['nome'].$row['id']."</td>";
+        echo "<td>".$row['id']."</td>";
+        echo "<td>".$row['nome']."</td>";
         echo "<td>".$row['genero']."</td>";
         echo "<td>".$row['valor']."</td>";
         echo "<td>".$row['plataforma']."</td>";
         echo '<td>
         <div class="formulario">
             <button id="editar" onClick="editGame('.$row['id'].')">Editar</button>
-            <button id="infos">Infos</button>
             <button id="excluir" onClick="deleteGame('.$row['id'].')">Excluir</button>
             
             
