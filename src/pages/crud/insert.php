@@ -6,13 +6,13 @@ include 'global/functions.php';
 // Check if the request is a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the form data sent from the HTML form
-    //$data = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
 
     $args = array(
-    'nome'  =>  $_POST['nome'],
-    'genero'  =>  $_POST['genero'],
-    'valor'  =>  $_POST['valor'],
-    'plataforma'  =>  $_POST['plataforma']);
+    'nome'  =>  $data['nome'],
+    'genero'  =>  $data['genero'],
+    'valor'  =>  $data['valor'],
+    'plataforma'  =>  $data['plataforma']);
     
     $result = insertGame($pdo, $args);
 

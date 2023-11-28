@@ -6,9 +6,9 @@ include 'global/functions.php';
 // Check if the request is a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the form data sent from the HTML form
-    //$data = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
     
-    $result = deleteGame($pdo, $_POST['id']);
+    $result = deleteGame($pdo, $data['id']);
 
     if ($result) {
         // Return a success message or any other response

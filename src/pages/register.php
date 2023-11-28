@@ -77,83 +77,83 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         var elementoEditado;
-        $(document).ready(function() {
-            $('#enviado').on('click', function(){
-                var nome = $('#nome').val();
-                var genero = $('#genero').val();
-                var valor = $('#valor').val();
-                var plataforma = $('#plataforma').val();
+        document.addEventListener("DOMContentLoaded", function() {
+        var enviado = document.getElementById('enviado');
+        enviado.addEventListener('click', function() {
+            let nome = document.getElementById('nome').value;
+            let genero = document.getElementById('genero').value;
+            let valor = document.getElementById('valor').value;
+            let plataforma = document.getElementById('plataforma').value;
 
-                // Create a JSON object with the form data
-                var formData = {
-                    'nome': nome,
-                    'genero': genero,
-                    'valor': valor,
-                    'plataforma': plataforma,
-                };
-                console.log(formData);
-                // Send the form data to the PHP script using AJAX
-                $.ajax({
-                    type: 'POST',
-                    url: 'crud/insert.php',
-                    data: formData,
-                    success: function(response) {
-                        // Handle the response from the PHP script
-                        console.log(response);
-                        location.reload()
-                    }
-                });
-            });
+            let formData = {
+                'nome': nome,
+                'genero': genero,
+                'valor': valor,
+                'plataforma': plataforma
+            };
 
-            $('#enviarEdicao').on('click', function(){
-                var id = $('#id').val();
-                var nome = $('#nome').val();
-                var genero = $('#genero').val();
-                var valor = $('#valor').val();
-                var plataforma = $('#plataforma').val();
+            console.log(formData);
 
-                // Create a JSON object with the form data
-                var formData = {
-                    'id': id,
-                    'nome': nome,
-                    'genero': genero,
-                    'valor': valor,
-                    'plataforma': plataforma,
-                };
-                console.log(formData);
-                // Send the form data to the PHP script using AJAX
-                $.ajax({
-                    type: 'POST',
-                    url: 'crud/update.php',
-                    data: formData,
-                    success: function(response) {
-                        // Handle the response from the PHP script
-                        console.log(response);
-                        location.reload()
-                    }
-                });
-
-                //$('#enviarEdicao').prop('disabled', true);
-                //$('#enviarEdicao').hide();
-            });
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'crud/insert.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    console.log(xhr.responseText);
+                    location.reload();
+                }
+            };
+            xhr.send(JSON.stringify(formData));
         });
 
-        function deleteGame(id){
-            let formData = {"id": id};
-            $.ajax({
-                type: 'POST',
-                url: 'crud/delete.php',
-                data: formData,
-                success: function(response) {
-                    // Handle the response from the PHP script
-                    console.log(response);
-                    location.reload()
+        var enviarEdicao = document.getElementById('enviarEdicao');
+        enviarEdicao.addEventListener('click', function() {
+            let id = document.getElementById('id').value;
+            let nome = document.getElementById('nome').value;
+            let genero = document.getElementById('genero').value;
+            let valor = document.getElementById('valor').value;
+            let plataforma = document.getElementById('plataforma').value;
+
+            let formData = {
+                'id': id,
+                'nome': nome,
+                'genero': genero,
+                'valor': valor,
+                'plataforma': plataforma
+            };
+
+            console.log(formData);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'crud/update.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    console.log(xhr.responseText);
+                    location.reload();
                 }
-            });            
-        }
+            };
+            xhr.send(JSON.stringify(formData));
+        });
+    });
+
+
+    function deleteGame(id) {
+        let formData = { "id": id };
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'crud/delete.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                console.log(xhr.responseText);
+                location.reload();
+            }
+        };
+        xhr.send(JSON.stringify(formData));
+    }
+
         // function infos(id){
         //     let formData = {"id": id};
         //     $.ajax({
@@ -169,20 +169,21 @@
 
         function editGame(id){
             elementoEditado = id;
-            var row = $("#" + id); // Get the table row with the corresponding ID using jQuery
-            var cells = row.find('td'); // Find all the table cells within the row
+            let row = document.getElementById(id); // Get the table row with the corresponding ID
+            let cells = row.getElementsByTagName('td'); // Find all the table cells within the row
 
-            var current_id = $(cells[0]).text(); // Retrieve the inner text of the first cell
-            var current_nome = $(cells[1]).text(); // Retrieve the inner text of the first cell
-            var current_genero = $(cells[2]).text(); // Retrieve the inner text of the second cell
-            var current_valor = $(cells[3]).text(); // Retrieve the inner text of the third cell
-            var current_plataforma = $(cells[4]).text(); // Retrieve the inner text of the fourth cell
-         
-            var id = $('#id').val(current_id);
-            var nome = $('#nome').val(current_nome);
-            var genero = $('#genero').val(current_genero);
-            var valor = $('#valor').val(current_valor);
-            var plataforma = $('#plataforma').val(current_plataforma);
+            let current_id = cells[0].innerText; // Retrieve the inner text of the first cell
+            let current_nome = cells[1].innerText; // Retrieve the inner text of the second cell
+            let current_genero = cells[2].innerText; // Retrieve the inner text of the third cell
+            let current_valor = cells[3].innerText; // Retrieve the inner text of the fourth cell
+            let current_plataforma = cells[4].innerText; // Retrieve the inner text of the fifth cell
+
+            document.getElementById('id').value = current_id;
+            document.getElementById('nome').value = current_nome;
+            document.getElementById('genero').value = current_genero;
+            document.getElementById('valor').value = current_valor;
+            document.getElementById('plataforma').value = current_plataforma;
+
             
             //$('#enviarEdicao').prop('disabled', false);
             //$('#enviarEdicao').show();
